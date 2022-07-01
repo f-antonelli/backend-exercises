@@ -48,50 +48,66 @@ class Container {
   };
 
   getById = async (id) => {
-    let data = await fs.promises.readFile(
-      `./resources/${this.fileName}`,
-      "utf-8"
-    );
-    let content = JSON.parse(data);
+    try {
+      let data = await fs.promises.readFile(
+        `./resources/${this.fileName}`,
+        "utf-8"
+      );
+      let content = JSON.parse(data);
 
-    // # Filter the array of object to find the one with the same id
-    let value = content.filter((item) => item.id == id);
+      // # Filter the array of object to find the one with the same id
+      let value = content.filter((item) => item.id == id);
 
-    // # If there isnt a product with the same id, return null.
-    return value.length ? value : null;
+      // # If there isnt a product with the same id, return null.
+      return value.length ? value : null;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   getAll = async () => {
-    let data = await fs.promises.readFile(
-      `./resources/${this.fileName}`,
-      "utf-8"
-    );
+    try {
+      let data = await fs.promises.readFile(
+        `./resources/${this.fileName}`,
+        "utf-8"
+      );
 
-    return JSON.parse(data);
+      return JSON.parse(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   deleteById = async (id) => {
-    let data = await fs.promises.readFile(
-      `./resources/${this.fileName}`,
-      "utf-8"
-    );
-    let content = JSON.parse(data);
+    try {
+      let data = await fs.promises.readFile(
+        `./resources/${this.fileName}`,
+        "utf-8"
+      );
+      let content = JSON.parse(data);
 
-    // # Products filtered.
-    let contentEdited = content.filter((item) => item.id !== id);
+      // # Products filtered.
+      let contentEdited = content.filter((item) => item.id !== id);
 
-    await fs.promises.writeFile(
-      `./resources/${this.fileName}`,
-      JSON.stringify(contentEdited)
-    );
+      await fs.promises.writeFile(
+        `./resources/${this.fileName}`,
+        JSON.stringify(contentEdited)
+      );
 
-    console.log(`Product with ${id} has been removed.`);
+      console.log(`Product with ${id} has been removed.`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   deleteAll = async () => {
-    await fs.promises.writeFile(`./resources/${this.fileName}`, "");
+    try {
+      await fs.promises.writeFile(`./resources/${this.fileName}`, "");
 
-    console.log("The file is empty.");
+      console.log("The file is empty.");
+    } catch (err) {
+      console.log(err);
+    }
   };
 }
 
