@@ -16,14 +16,8 @@ class User {
   countPets = () =>
     console.log(`The user ${this.name} has ${this.pets.length} pets.`);
 
-  addBook = (bookName, author) => {
-    const book = {
-      name: `${bookName}`,
-      author: `${author}`,
-    };
-
-    this.books.push(book);
-  };
+  addBook = (bookName, author) =>
+    this.books.push({ name: `${bookName}`, author: `${author}` });
 
   getBookNames = () => console.log(this.books.map((el) => el.name));
 }
