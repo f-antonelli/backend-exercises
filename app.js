@@ -1,58 +1,49 @@
-class User {
-  // # Constructor
-  constructor(name, lastname) {
-    this.name = name
-    this.lastname = lastname
-    this.books = []
-    this.pets = []
+// # Own imports .
+const Container = require("./second-exercise/class");
+const HttpError = require("./models/http-error");
+
+const express = require("express");
+
+const PORT = process.env.PORT || 8080; // => env added for Heroku .
+const app = express();
+
+// # Using class from second-exercise
+let container = new Container("products.txt");
+
+app.get("/products", async (req, res) => {
+  let data;
+
+  try {
+    data = await container.getAll();
+  } catch (err) {
+    // # Custom error created in models folder .
+    const error = new HttpError(
+      "Fetching class failed, please try again later",
+      500
+    );
+    throw error;
+  }
+  res.send(data);
+});
+
+app.get("/productRandom", async (req, res) => {
+  let data;
+
+  try {
+    data = await container.getAll();
+
+    data = data[Math.floor(Math.random() * data.length)];
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching class failed, please try again later",
+      500
+    );
+    throw error;
   }
 
-  // # Methods
-  getFullName = () =>
-    console.log(`My full name is ${this.name} ${this.lastname}`)
+  res.send(data);
+});
 
-  addPet = (petName) => this.pets.push(petName)
-
-  countPets = () =>
-    console.log(`The user ${this.name} has ${this.pets.length} pets.`)
-
-  addBook = (bookName, author) => {
-    const book = {
-      name: `${bookName}`,
-      author: `${author}`,
-    }
-
-    this.books.push(book)
-  }
-
-  getBookNames = () => {
-    let bookNames = this.books.map((el) => {
-      return el.name
-    });
-
-    console.log(bookNames)
-  };
-}
-
-// # Instance
-const user1 = new User("Tom", "Cruise")
-
-// # Using User methods.
-
-user1.getFullName()
-console.log("-------------")
-
-// # Adding pets to array.
-user1.addPet("Zoe")
-user1.addPet("Ollie")
-user1.addPet("Oliver")
-
-user1.countPets()
-console.log("-------------")
-
-// # Adding books to array of objects.
-user1.addBook("Top Gun: Maverick", "Joseph Kosinski")
-user1.addBook("Avatar", "James Cameron")
-user1.addBook("Straight Outta Compton", "F. Gary Gray")
-
-user1.getBookNames()
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
