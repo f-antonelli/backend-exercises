@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Escuadra",
+    "price": 123.45,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+    "id": 2
+  },
+  {
+    "title": "Globo Terraqueo",
+    "price": 345.67,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+    "id": 4
+  },
+  {
+    "title": "Calculadora 3fd4",
+    "price": 1860,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+    "id": 3
+  },
+  {
+    "title": "Book",
+    "price": "2550",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-science-vol-1-1/512/reading_book_read_learn-256.png",
+    "id": 5
+  }
+]
