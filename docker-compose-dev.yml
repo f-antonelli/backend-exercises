@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  react-app:
+    build:
+      context: ./client
+      dockerfile: frontend-dev.dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./client/src:/app/src
+    env_file:
+      - ./client/.env
+    stdin_open: true
+    tty: true
