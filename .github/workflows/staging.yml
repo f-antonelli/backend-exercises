@@ -34,9 +34,10 @@ jobs:
             node-version: 16
         - run: npm ci
         - run: npm run format:check
-        - run: npm test -- --watchAll=false --coverage
-          env:
-            CI: true
+        # Lines if i add test in a future
+        # - run: npm test -- --watchAll=false --coverage
+        #   env:
+        #     CI: true
         - name: Build Project
           if: github.event_name == 'push'
           run: npm run build
