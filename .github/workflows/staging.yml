@@ -6,8 +6,8 @@ on:
   #     - develop
   push:
     branches:
-      # - develop
       - workflow
+      # - develop
 
 defaults:
   run:
