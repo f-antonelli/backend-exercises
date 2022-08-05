@@ -1,0 +1,45 @@
+name: Workflow to Develop
+
+on:
+  # pull_request:
+  #   branches:
+  #     - develop
+  push:
+    branches:
+      # - develop
+      - workflow
+
+defaults:
+  run:
+    working-directory: client
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+    steps:
+        - uses: actions/checkout@v3
+        - name: Cache node_modules
+          uses: actions/cache@v3
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
+        - name: Use NodeJS
+          uses: actions/setup-node@v3
+          with:
+            node-version: 16
+        - run: npm ci
+        - run: npm run format:check
+        - run: npm test -- --watchAll=false --coverage
+          env:
+            CI: true
+        - name: Build Project
+          if: github.event_name == 'push'
+          run: npm run build
+        - name: Deploy to Staging
+          if: github.event_name == 'push'
+          run: npx surge --project ./build --domain fd-backend-31030.surge.sh
