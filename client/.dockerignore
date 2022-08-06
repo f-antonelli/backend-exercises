@@ -5,3 +5,5 @@ frontent-*
 .gitignore
 .dockerignore
 .env
+.frontend-dev.dockerfile
+.frontend-prod.dockerfile

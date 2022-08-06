@@ -1,7 +1,5 @@
 const App = () => {
-  return (
-    <div>backend-course</div>
-  )
-}
+  return <div>backend-course</div>;
+};
 
-export default App
+export default App;
