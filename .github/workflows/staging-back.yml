@@ -30,10 +30,6 @@ jobs:
             node-version: 16
         - run: npm ci
         - run: npm run format:check
-        # Lines if i add test in a future
-        # - run: npm test -- --watchAll=false --coverage
-        #   env:
-        #     CI: true
         - name: Deploy to Heroku
           uses: akhileshns/heroku-deploy@v3.12.12
           with:
@@ -41,4 +37,4 @@ jobs:
             heroku_app_name: ${{secrets.HEROKU_DEV_NAME }}
             heroku_email: ${{secrets.HEROKU_EMAIL }}
             branch: "workflow"
-            # justlogin: true
+            
