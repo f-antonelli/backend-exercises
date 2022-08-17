@@ -1,0 +1,43 @@
+name: Workflow to Develop Backend
+
+on:
+  # pull_request:
+  #   branches:
+  #     - develop
+  push:
+    branches:
+      - workflow
+
+defaults:
+  run:
+    working-directory: server
+
+jobs:
+  build-server:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v3
+        - name: Cache node_modules
+          uses: actions/cache@v3
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
+        - name: Install npm and run prettier
+          uses: actions/setup-node@v3
+          with:
+            node-version: 16
+        - run: npm ci
+        - run: npm run format:check
+        # Lines if i add test in a future
+        # - run: npm test -- --watchAll=false --coverage
+        #   env:
+        #     CI: true
+        - name: Deploy to Heroku
+          uses: akhileshns/heroku-deploy@v3.12.12
+          with:
+            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+            heroku_app_name: ${{secrets.HEROKU_DEV_NAME }}
+            heroku_email: ${{secrets.HEROKU_EMAIL }}
+            appdir: "server"

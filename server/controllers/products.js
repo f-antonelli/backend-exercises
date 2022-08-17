@@ -1,8 +1,8 @@
-const Container = require("../models/class-products");
-const HttpError = require("../models/http-error");
+const Container = require('../models/class-products');
+const HttpError = require('../models/http-error');
 
 // Instance created .
-let container = new Container("products.json");
+let container = new Container('products.json');
 
 const getProducts = async (req, res, next) => {
   const productId = req.params.id; // => Get params value .
@@ -14,18 +14,12 @@ const getProducts = async (req, res, next) => {
       product = await container.getAll();
     }
   } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, could not find a product.",
-      500
-    );
+    const error = new HttpError('Something went wrong, could not find a product.', 500);
     return next(error);
   }
 
   if (!product) {
-    const error = new HttpError(
-      "Could not find a product for the provided id.",
-      404
-    );
+    const error = new HttpError('Could not find a product for the provided id.', 404);
 
     return next(error);
   }
@@ -47,10 +41,7 @@ const createProduct = async (req, res, next) => {
       stock,
     });
   } catch (err) {
-    const error = new HttpError(
-      "Creating product failed, please try again",
-      500
-    );
+    const error = new HttpError('Creating product failed, please try again', 500);
 
     return next(error);
   }
@@ -68,10 +59,7 @@ const updateProduct = async (req, res, next) => {
 
     contentFile = await container.getAll();
   } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, could not find a product.",
-      500
-    );
+    const error = new HttpError('Something went wrong, could not find a product.', 500);
     return next(error);
   }
 
@@ -91,10 +79,7 @@ const updateProduct = async (req, res, next) => {
   try {
     await container.updateFile(contentFile);
   } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, could not update product.",
-      500
-    );
+    const error = new HttpError('Something went wrong, could not update product.', 500);
     return next(error);
   }
 
@@ -107,15 +92,12 @@ const deleteProduct = async (req, res, next) => {
   try {
     await container.deleteById(Number(productId));
   } catch (err) {
-    const error = new HttpError(
-      "Something went wrong, could not delete product.",
-      500
-    );
+    const error = new HttpError('Something went wrong, could not delete product.', 500);
 
     return next(error);
   }
 
-  res.status(200).json({ message: "Deleted product." });
+  res.status(200).json({ message: 'Deleted product.' });
 };
 
 exports.getProducts = getProducts;
