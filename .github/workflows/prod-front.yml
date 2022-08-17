@@ -1,0 +1,57 @@
+name: Workflow to Deploy Front in Production
+
+on:
+  # pull_request:
+  #   branches:
+  #     - main
+  push:
+    branches:
+      - workflow
+      # - main
+
+defaults:
+  run:
+    working-directory: client
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Use NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm ci
+      - run: npm run format:check
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: npm run build
+      - name: Upload Build Folder
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: ./client/build
+      - name: ZIP Assets
+        if: github.event_name == 'push'
+        run: |
+          zip -r build.zip ./build
+      # - name: Create a Release
+      #   if: github.event_name == 'push'
+      #   run: npx semantic-release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to Production
+        if: github.event_name == 'push' 
+        run: npx surge --project ./build --domain nft-prod-mernapp.surge.sh
