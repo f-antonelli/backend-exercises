@@ -42,4 +42,4 @@ jobs:
             heroku_email: ${{secrets.HEROKU_EMAIL }}
             branch: workflow
             # justlogin: true
-            appdir: "server"
+            appdir: ./server
