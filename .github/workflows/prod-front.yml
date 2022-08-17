@@ -1,13 +1,12 @@
 name: Workflow to Deploy Front in Production
 
 on:
-  # pull_request:
-  #   branches:
-  #     - main
+  pull_request:
+    branches:
+      - main
   push:
     branches:
-      - workflow
-      # - main
+      - main
 
 defaults:
   run:
@@ -47,11 +46,11 @@ jobs:
         if: github.event_name == 'push'
         run: |
           zip -r build.zip ./build
-      # - name: Create a Release
-      #   if: github.event_name == 'push'
-      #   run: npx semantic-release
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a Release
+        if: github.event_name == 'push'
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to Production
         if: github.event_name == 'push' 
         run: npx surge --project ./build --domain nft-prod-mernapp.surge.sh
