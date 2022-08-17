@@ -1,4 +1,4 @@
-name: Workflow to Develop
+name: Workflow to Develop Frontend
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ defaults:
     working-directory: client
 
 jobs:
-  build:
+  build-client:
     runs-on: ubuntu-latest
     env:
       SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}

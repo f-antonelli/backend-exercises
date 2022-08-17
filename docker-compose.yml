@@ -3,3 +3,10 @@ services:
   react-app:
     build:
       context: ./client
+  node-app:
+    build:
+      context: ./server
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./server/.env
