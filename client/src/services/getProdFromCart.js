@@ -6,7 +6,7 @@ const fromApiResponseToUser = apiResponse => {
   return data;
 };
 
-const getProdFromCart = async (id) => {
+const getProdFromCart = async id => {
   const apiURL = `http://localhost:8080/api/cart/${id}/products`;
 
   return await axios
