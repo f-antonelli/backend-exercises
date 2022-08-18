@@ -47,5 +47,6 @@
     "stock": 3,
     "id": 3,
     "timestamp": 1660740468766
-  }
+  },
+  { "title": "Boligoma", "price": 2231, "id": null, "timestamp": 1660850847733 }
 ]
