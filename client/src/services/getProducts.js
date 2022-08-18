@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from './config';
 
 const fromApiResponseToUser = apiResponse => {
   const { data = [] } = apiResponse;
@@ -7,7 +8,7 @@ const fromApiResponseToUser = apiResponse => {
 };
 
 const getProducts = async () => {
-  const apiURL = `http://localhost:8080/api/products`;
+  const apiURL = `${API_URL}/api/products`;
 
   return await axios
     .get(apiURL)

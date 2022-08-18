@@ -5,7 +5,7 @@ services:
       context: ./client
       dockerfile: frontend-prod.dockerfile
     ports:
-      - '8080:80'
+      - '8081:80'
   node-app:
     build:
       context: ./server

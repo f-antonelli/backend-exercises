@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { API_URL } from './config';
 
 const addToCart = async (id, product) => {
-  const apiURL = `http://localhost:8080/api/cart/${id}/products`;
+  const apiURL = `${API_URL}/api/cart/${id}/products`;
 
   return await axios
     .post(apiURL, { product })
