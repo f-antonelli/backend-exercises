@@ -1,7 +1,7 @@
 import CartItem from './CartItems';
 
 const CartList = ({ products }) => {
-  console.log(products)
+  console.log(products);
   return (
     <>
       {products.map((product, index) => (

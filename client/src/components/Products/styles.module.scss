@@ -18,14 +18,14 @@
   margin: 10px 20px;
   box-shadow: 6px 6px 23px -6px rgba(0, 0, 0, 0.75);
   .img {
-    flex: .6;
+    flex: 0.6;
     display: flex;
     width: 100%;
     height: 70%;
     object-fit: contain;
   }
   .content {
-    flex: .4;
+    flex: 0.4;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,14 +51,14 @@
       }
     }
   }
-  .button{
+  .button {
     cursor: pointer;
     outline: none;
     border: none;
-    padding: 0.3rem .5rem;
+    padding: 0.3rem 0.5rem;
     width: 50%;
-    color: #FFFFFF;
+    color: #ffffff;
     background-color: $violet;
-    margin: .5rem 0;
+    margin: 0.5rem 0;
   }
 }

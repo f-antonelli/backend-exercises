@@ -1,5 +1,5 @@
 import Product from './Product';
-import styles from './styles.module.scss'
+import styles from './styles.module.scss';
 
 const ProductsList = ({ products }) => {
   return (
