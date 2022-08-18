@@ -1,0 +1,64 @@
+@import '../../index.scss';
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17.25rem, 1fr));
+  grid-template-rows: 22rem;
+  gap: 1rem;
+  margin: 0 auto 0 auto;
+  width: 70%;
+  justify-items: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 350px;
+  margin: 10px 20px;
+  box-shadow: 6px 6px 23px -6px rgba(0, 0, 0, 0.75);
+  .img {
+    flex: .6;
+    display: flex;
+    width: 100%;
+    height: 70%;
+    object-fit: contain;
+  }
+  .content {
+    flex: .4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.4rem;
+    .title {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .description {
+      font-size: 0.8rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+    .boxPrice {
+      display: flex;
+      justify-content: space-between;
+      .price {
+        font-weight: 500;
+      }
+      .stock {
+        font-size: 0.7rem;
+        font-weight: 300;
+      }
+    }
+  }
+  .button{
+    cursor: pointer;
+    outline: none;
+    border: none;
+    padding: 0.3rem .5rem;
+    width: 50%;
+    color: #FFFFFF;
+    background-color: $violet;
+    margin: .5rem 0;
+  }
+}
