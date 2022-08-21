@@ -1,98 +1,54 @@
-const fs = require('fs');
-
 class Container {
-  constructor(fileName) {
-    this.fileName = fileName;
+  constructor(db, tableName) {
+    this.db = db;
+    this.tableName = tableName;
   }
 
-  save = async obj => {
+  save = async product => {
     try {
-      let data = await fs.promises.readFile(`./resources/${this.fileName}`, 'utf-8');
+      let data = await this.db(this.tableName).insert(product);
 
-      if (data.length == 0) {
-        obj.id = 1;
-        obj.timestamp = Date.now();
-
-        // # I create and array first to re-create a JSON file in products.txt
-        await fs.promises.writeFile(`./resources/${this.fileName}`, JSON.stringify(new Array(obj)));
-
-        return obj;
-      } else {
-        let fileContent = JSON.parse(data);
-
-        // # Get max id from the array of objects
-        let maxId = fileContent.reduce((prev, curr) => (prev.id > curr.id ? prev : curr));
-
-        // # Assign an id to new object.
-        obj.id = Number(maxId) + 1;
-        obj.timestamp = Date.now();
-        // # Push new object to array of objects, now with max id
-        fileContent.push(obj);
-
-        await fs.promises.writeFile(`./resources/${this.fileName}`, JSON.stringify(fileContent));
-
-        return obj;
-      }
+      return data;
     } catch (err) {
-      // console.log(err);
+      return err.sqlMessage;
     }
   };
 
   getById = async id => {
     try {
-      let data = await fs.promises.readFile(`./resources/${this.fileName}`, 'utf-8');
-      let content = JSON.parse(data);
+      let data = await this.db(this.tableName).select().where('id', id);
 
-      // # Filter the array of object to find the one with the same id
-      let value = content.find(item => item.id == id);
-
-      // # If there isnt a product with the same id, return null.
-      return value ? value : null;
+      return data;
     } catch (err) {
-      // console.log(err);
+      return err.sqlMessage;
     }
   };
 
   getAll = async () => {
     try {
-      let data = await fs.promises.readFile(`./resources/${this.fileName}`, 'utf-8');
+      let data = await this.db(this.tableName).select();
 
-      return JSON.parse(data);
+      return data;
     } catch (err) {
-      // console.log(err);
+      return err.sqlMessage;
     }
   };
 
-  updateFile = async content => {
+  updateDB = async product => {
     try {
-      await fs.promises.writeFile(`./resources/${this.fileName}`, JSON.stringify(content));
+      let data = await this.db(this.tableName).where({ id: product.id }).update(product);
+
+      return data;
     } catch (err) {
-      // console.log(err);
+      return err.sqlMessage;
     }
   };
 
   deleteById = async id => {
     try {
-      let data = await fs.promises.readFile(`./resources/${this.fileName}`, 'utf-8');
-      let content = JSON.parse(data);
-      // # Products filtered.
-      let contentEdited = content.filter(item => item.id !== id);
-
-      await fs.promises.writeFile(`./resources/${this.fileName}`, JSON.stringify(contentEdited));
-
-      console.log(`Product with ${id} has been removed.`);
+      await this.db(this.tableName).where({ id: id }).del();
     } catch (err) {
-      // console.log(err);
-    }
-  };
-
-  deleteAll = async () => {
-    try {
-      await fs.promises.writeFile(`./resources/${this.fileName}`, '');
-
-      console.log('The file is empty.');
-    } catch (err) {
-      console.log(err);
+      return err.sqlMessage;
     }
   };
 }

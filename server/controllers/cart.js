@@ -1,10 +1,8 @@
 const Cart = require('../models/class-cart');
-const Container = require('../models/class-products');
 const HttpError = require('../models/http-error');
 
 // Instance created .
 let cart = new Cart('cart.json');
-let container = new Container('products.json');
 
 const getProductsCart = async (req, res, next) => {
   const cartId = req.params.id;
