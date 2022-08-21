@@ -5,7 +5,7 @@ const addToCart = async (id, product) => {
   const apiURL = `${API_URL}/api/cart/${id}/products`;
 
   return await axios
-    .post(apiURL, { product })
+    .post(apiURL, product)
     .catch(function (error) {
       console.log(error);
     })
