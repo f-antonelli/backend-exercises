@@ -1,0 +1,30 @@
+<h1 class="d-flex display-4 justify-content-center mb-5">PRODUCTS</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-image table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Picture</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each products}}
+            <tr>
+              <th scope="row">{{this.title}}</th>
+              <td>${{this.price}}</td>
+              <td class="w-25"><img
+                  class="img-fluid img-thumbnail"
+                  src={{this.img}}
+                  alt={{this.title}}
+                /></td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
