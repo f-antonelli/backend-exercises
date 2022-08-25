@@ -1,17 +1,21 @@
+const knex = require('knex');
+const knexConfig = require('../knexfile-mariadb');
+const db = knex(knexConfig);
+
 const Container = require('../models/class-products');
 const HttpError = require('../models/http-error');
 
 // Instance created .
-let container = new Container('products.json');
+let c = new Container(db, 'products');
 
 const getProducts = async (req, res, next) => {
   const productId = req.params.id; // => Get params value .
   let product;
   try {
     if (productId) {
-      product = await container.getById(productId);
+      product = await c.getById(productId);
     } else {
-      product = await container.getAll();
+      product = await c.getAll();
     }
   } catch (err) {
     const error = new HttpError('Something went wrong, could not find a product.', 500);
@@ -29,75 +33,64 @@ const getProducts = async (req, res, next) => {
 
 const createProduct = async (req, res, next) => {
   const { title, price, img, description, code, stock } = req.body;
-  let newProduct;
+
+  const newProduct = {
+    title,
+    price,
+    img,
+    description,
+    code,
+    stock,
+  };
 
   try {
-    newProduct = await container.save({
-      title,
-      price,
-      img,
-      description,
-      code,
-      stock,
-    });
+    const result = await c.save(newProduct);
+
+    res.status(201).send(result);
   } catch (err) {
     const error = new HttpError('Creating product failed, please try again', 500);
 
     return next(error);
   }
-
-  res.status(201).json(newProduct);
 };
 
 const updateProduct = async (req, res, next) => {
-  const { title, price, img, description, stock } = req.body;
+  const { title, price, img, description, code, stock } = req.body;
   const productId = req.params.id;
 
-  let product, contentFile;
-  try {
-    await container.deleteById(Number(productId));
-
-    contentFile = await container.getAll();
-  } catch (err) {
-    const error = new HttpError('Something went wrong, could not find a product.', 500);
-    return next(error);
-  }
-
   // Update values .
-  product = {
+  const product = {
+    id: Number(productId),
     title,
     price,
     img,
     description,
     stock,
-    id: Number(productId),
-    timestamp: Date.now(),
+    code,
   };
 
-  contentFile.push(product);
-
   try {
-    await container.updateFile(contentFile);
+    await c.updateDB(product);
+
+    res.status(200).send('Product updated.');
   } catch (err) {
     const error = new HttpError('Something went wrong, could not update product.', 500);
     return next(error);
   }
-
-  res.status(200).json(product);
 };
 
 const deleteProduct = async (req, res, next) => {
   const productId = req.params.id;
 
   try {
-    await container.deleteById(Number(productId));
+    await c.deleteById(Number(productId));
+
+    res.status(200).json({ message: 'Product deleted.' });
   } catch (err) {
     const error = new HttpError('Something went wrong, could not delete product.', 500);
 
     return next(error);
   }
-
-  res.status(200).json({ message: 'Deleted product.' });
 };
 
 exports.getProducts = getProducts;
