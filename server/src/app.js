@@ -1,7 +1,9 @@
 const express = require('express');
-const productsRoutes = require('./routes/products');
-const cartRoutes = require('./routes/cart');
+const productsRoutes = require('./routes/products.routes');
+const cartRoutes = require('./routes/cart.routes');
 const HttpError = require('./models/http-error');
+const connection = require('./database/mongoDB');
+
 const app = express();
 
 const PORT = process.env.PORT || 8080;
@@ -27,6 +29,8 @@ app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
   throw error;
 });
+
+connection()
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
