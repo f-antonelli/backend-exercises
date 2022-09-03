@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+const connection = require('../../database/mongoDB');
 
 class MongoDB {
   constructor(model, schema) {
     this.model = mongoose.model(model, schema);
+
+    connection();
   }
 
   save = async item => {
@@ -45,9 +48,10 @@ class MongoDB {
 
   updateById = async (item, id) => {
     const { name, price, description, stock } = item;
+    let _id = mongoose.Types.ObjectId(id);
     let _item, result;
     try {
-      _item = await this.model.findOne({ _id: id });
+      _item = await this.model.findOne({ _id });
     } catch (error) {
       res.status(500).json({
         message: error.message,

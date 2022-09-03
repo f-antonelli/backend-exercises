@@ -1,8 +1,7 @@
 const express = require('express');
 const productsRoutes = require('./routes/products.routes');
 const cartRoutes = require('./routes/cart.routes');
-const HttpError = require('./models/http-error');
-const connection = require('./database/mongoDB');
+const HttpError = require('./utils/HttpError');
 
 const app = express();
 
@@ -29,8 +28,6 @@ app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
   throw error;
 });
-
-connection()
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

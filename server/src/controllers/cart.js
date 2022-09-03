@@ -1,6 +1,6 @@
 const Cart = require('../models/class-cart');
-const Container = require('../models/class-products');
-const HttpError = require('../models/http-error');
+const Container = require('../models/containers/FS');
+const HttpError = require('../utils/HttpError');
 
 // Instance created .
 let cart = new Cart('cart.json');

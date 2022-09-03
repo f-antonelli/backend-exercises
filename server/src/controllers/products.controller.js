@@ -1,9 +1,11 @@
-const HttpError = require('../models/http-error');
+const HttpError = require('../utils/HttpError');
 const DAOMongoDB = require('../models/products/DAOMongoDB');
+const DAOFirebase = require('../models/products/DAOFirebase');
 const { Types } = require('mongoose');
 
 // Instance created .
-let c = new DAOMongoDB();
+// let c = new DAOMongoDB();
+let c = new DAOFirebase();
 
 const getProducts = async (req, res, next) => {
   let id = req.params.id;
@@ -54,7 +56,6 @@ const createProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
   const product = req.body;
   let id = req.params.id;
-  id = Types.ObjectId(id);
 
   let result;
   try {

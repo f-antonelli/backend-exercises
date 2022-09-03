@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isAdmin = require('../middleware/check-auth');
+const isAdmin = require('../middleware/checkAuth');
 const {
   getProducts,
   createProduct,
