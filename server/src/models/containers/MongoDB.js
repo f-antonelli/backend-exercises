@@ -9,11 +9,13 @@ class MongoDB {
   }
 
   save = async item => {
+    console.log(item)
     try {
       const newItem = this.model(item);
 
-      let data = await newItem.save();
-      return data;
+      let result = await newItem.save();
+
+      return result;
     } catch (error) {
       res.status(500).json({
         message: error.message,
@@ -47,24 +49,11 @@ class MongoDB {
   };
 
   updateById = async (item, id) => {
-    const { name, price, description, stock } = item;
     let _id = mongoose.Types.ObjectId(id);
-    let _item, result;
-    try {
-      _item = await this.model.findOne({ _id });
-    } catch (error) {
-      res.status(500).json({
-        message: error.message,
-      });
-    }
-
-    _item.name = name;
-    _item.price = price;
-    _item.description = description;
-    _item.stock = stock;
+    let result;
 
     try {
-      result = await _item.save();
+      result = await this.model.updateOne({ _id }, item);
 
       return result;
     } catch (error) {

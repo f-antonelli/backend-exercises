@@ -1,5 +1,5 @@
 const fs = require('fs');
-const HttpError = require('../utils/HttpError');
+const HttpError = require('../../utils/HttpError');
 
 class Cart {
   constructor(fileName) {

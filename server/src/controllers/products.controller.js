@@ -1,11 +1,11 @@
 const HttpError = require('../utils/HttpError');
-const DAOMongoDB = require('../models/products/DAOMongoDB');
-const DAOFirebase = require('../models/products/DAOFirebase');
+const DAOMongoDB = require('../models/daos/products/DAOMongoDB');
+const DAOFirebase = require('../models/daos/products/DAOFirebase');
 const { Types } = require('mongoose');
 
 // Instance created .
-// let c = new DAOMongoDB();
-let c = new DAOFirebase();
+let c = new DAOMongoDB();
+// let c = new DAOFirebase();
 
 const getProducts = async (req, res, next) => {
   let id = req.params.id;
@@ -17,6 +17,7 @@ const getProducts = async (req, res, next) => {
     } else {
       product = await c.getAll();
     }
+    res.send(product);
   } catch (err) {
     const error = new HttpError('Something went wrong, could not find a product.', 500);
     return next(error);
@@ -27,23 +28,14 @@ const getProducts = async (req, res, next) => {
 
     return next(error);
   }
-
-  res.send(product);
 };
 
 const createProduct = async (req, res, next) => {
-  const { name, price, image, description, code, stock } = req.body;
-  let newProduct;
+  const newProduct = req.body;
+  let result;
 
   try {
-    newProduct = await c.save({
-      name,
-      price,
-      image,
-      description,
-      code,
-      stock,
-    });
+    result = await c.save(newProduct);
   } catch (err) {
     const error = new HttpError('Creating product failed, please try again', 500);
 

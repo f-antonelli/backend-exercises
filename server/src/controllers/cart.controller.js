@@ -1,16 +1,17 @@
-
+const DAOFirebase = require('../models/daos/cart/DAOFirebase');
+const DAOMongoDB = require('../models/daos/cart/DAOMongoDB');
 const HttpError = require('../utils/HttpError');
 
 // Instance created .
-// let c = new DAOMongoDB();
 // let c = new DAOFirebase();
+let c = new DAOMongoDB();
 
 const getProductsCart = async (req, res, next) => {
-  const cartId = req.params.id;
+  const id = req.params.id;
 
   let products;
   try {
-    products = await cart.getCartById(Number(cartId));
+    products = await c.getById(id);
 
     res.send(products.products);
   } catch (err) {
@@ -20,64 +21,76 @@ const getProductsCart = async (req, res, next) => {
 };
 
 const createCart = async (req, res, next) => {
-  let idCart;
+  let result;
 
   try {
-    idCart = await cart.createCart();
+    result = await c.save({ products: [] });
+
+    res.status(201).json(result);
   } catch (err) {
     const error = new HttpError('Creating cart failed, please try again', 500);
 
     return next(error);
   }
-
-  res.status(201).json({ id: idCart });
 };
 
 const addProductCart = async (req, res, next) => {
-  const cartId = req.params.id;
+  const id = req.params.id;
   const product = req.body;
+  let result, allProducts;
 
   try {
-    await cart.saveProduct(Number(cartId), product);
+    allProducts = await c.getById(id);
+    allProducts = allProducts.products;
+    allProducts.push(product);
+    
+    result = await c.updateById({ products: allProducts }, id);
+
+    res.status(200).json(result);
   } catch (err) {
     const error = new HttpError('Something went wrong, could not add this product.', 500);
     return next(error);
   }
-
-  res.status(200).json({ message: 'Product added' });
 };
 
 const deleteCart = async (req, res, next) => {
   const cartId = req.params.id;
-
+  let result;
   try {
-    await cart.deleteCart(Number(cartId));
+    result = await c.deleteById(cartId);
+
+    res.status(200).json(result);
   } catch (err) {
     const error = new HttpError('Something went wrong, could not delete cart.', 500);
 
     return next(error);
   }
-
-  res.status(200).json({ message: 'Cart deleted.' });
 };
 
 const deleteProdFromCart = async (req, res, next) => {
   const idCart = req.params.id;
   const idProd = req.params.id_prod;
+  let cart, result, productFiltered;
 
   try {
-    await cart.delProdFromCart(Number(idCart), Number(idProd));
+    cart = await c.getById(idCart);
+
+    productFiltered = await cart.products.filter(product => product.id !== idProd);
+    
+    result = await c.updateById({ products: productFiltered }, idCart);
+
+    res.status(200).json(result);
   } catch (err) {
     const error = new HttpError('Something went wrong, could not delete product from cart.', 500);
 
     return next(error);
   }
-
-  res.status(200).json({ message: 'Product from cart deleted.' });
 };
 
-exports.createCart = createCart;
-exports.deleteCart = deleteCart;
-exports.addProductCart = addProductCart;
-exports.getProductsCart = getProductsCart;
-exports.deleteProdFromCart = deleteProdFromCart;
+module.exports = {
+  createCart,
+  deleteCart,
+  addProductCart,
+  getProductsCart,
+  deleteProdFromCart,
+};
