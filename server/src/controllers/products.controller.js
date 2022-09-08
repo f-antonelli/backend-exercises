@@ -1,7 +1,6 @@
 const HttpError = require('../utils/HttpError');
 const DAOMongoDB = require('../models/daos/products/DAOMongoDB');
 const DAOFirebase = require('../models/daos/products/DAOFirebase');
-const { Types } = require('mongoose');
 
 // Instance created .
 let c = new DAOMongoDB();

@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
-const connection = require('../../database/mongoDB');
 
 class MongoDB {
   constructor(model, schema) {
     this.model = mongoose.model(model, schema);
-
-    connection();
   }
 
   save = async item => {

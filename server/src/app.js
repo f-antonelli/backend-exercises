@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const productsRoutes = require('./routes/products.routes');
 const cartRoutes = require('./routes/cart.routes');
 const HttpError = require('./utils/HttpError');
@@ -10,16 +11,7 @@ const PORT = process.env.PORT || 8080;
 // Accept data in JSON format.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin,X-Requested-With, Content-Type, Accept, Authorization',
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-  next();
-});
+app.use(cors())
 
 app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
