@@ -1,4 +1,4 @@
-const HttpError = require('../models/http-error');
+const HttpError = require('../utils/HttpError');
 
 let admin = true;
 
