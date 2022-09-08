@@ -1,10 +1,8 @@
-const DAOFirebase = require('../models/daos/cart/DAOFirebase');
-const DAOMongoDB = require('../models/daos/cart/DAOMongoDB');
+const { CartDAO } = require('../models/daos/index');
 const HttpError = require('../utils/HttpError');
 
 // Instance created .
-// let c = new DAOFirebase();
-let c = new DAOMongoDB();
+let c = new CartDAO();
 
 const getProductsCart = async (req, res, next) => {
   const id = req.params.id;
@@ -43,7 +41,7 @@ const addProductCart = async (req, res, next) => {
     allProducts = await c.getById(id);
     allProducts = allProducts.products;
     allProducts.push(product);
-    
+
     result = await c.updateById({ products: allProducts }, id);
 
     res.status(200).json(result);
@@ -76,7 +74,7 @@ const deleteProdFromCart = async (req, res, next) => {
     cart = await c.getById(idCart);
 
     productFiltered = await cart.products.filter(product => product.id !== idProd);
-    
+
     result = await c.updateById({ products: productFiltered }, idCart);
 
     res.status(200).json(result);

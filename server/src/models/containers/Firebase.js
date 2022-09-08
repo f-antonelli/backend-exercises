@@ -6,11 +6,10 @@ class Firebase {
   }
 
   save = async item => {
-    const { name, price, image, code, description, stock } = item;
     try {
       const newItem = this.collection.doc();
 
-      let data = await newItem.create({ name, price, image, code, description, stock });
+      let data = await newItem.create(item);
 
       return data;
     } catch (error) {
@@ -47,11 +46,10 @@ class Firebase {
   };
 
   updateById = async (item, id) => {
-    const { name, price, description, stock } = item;
     let result;
 
     try {
-      result = await this.collection.doc(`${id}`).update({ name, price, description, stock });
+      result = await this.collection.doc(`${id}`).update(item);
 
       return result;
     } catch (error) {

@@ -1,10 +1,8 @@
 const HttpError = require('../utils/HttpError');
-const DAOMongoDB = require('../models/daos/products/DAOMongoDB');
-const DAOFirebase = require('../models/daos/products/DAOFirebase');
+const { ProductDAO } = require('../models/daos/index');
 
 // Instance created .
-let c = new DAOMongoDB();
-// let c = new DAOFirebase();
+let c = new ProductDAO();
 
 const getProducts = async (req, res, next) => {
   let id = req.params.id;
