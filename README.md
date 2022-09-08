@@ -4,6 +4,24 @@
 Im Currently building a NFT Marketplace to learn stack MERN. Also, I'm implementing github actions to use CI/CD and docker-compose for develop
 
 
+## Switch BBDD
+
+Its necessary add two .env files to work firebase and mongodb:
+
+- ./server/src/config/mongo.env => use this path and name
+```bash
+MONGODB_USER=antfd
+MONGODB_PASSWORD=Z9wz1RQQJnNVfAj4
+MONGODB_CLUSTER=cluster0.auyfunw.mongodb.net
+MONGODB_BBDD=mern-app
+```
+
+- ./server/src/config/bdselected.env => use this path and name
+```bash
+BBDD=MongoDB
+```
+
+- IMPORTANT: If you want to use FirebaseDB, change 'MongoDB' to 'Firebase'
 ## Run Locally
 
 Clone the project
@@ -35,9 +53,9 @@ Go to the project directory
 ## Deploy
 
 
-- Frontend ( surge ): http://nft-prod-mernapp.surge.sh/ 
+-  Frontend ( surge ): http://nft-prod-mernapp.surge.sh/ 
 
-- Backend ( heroku ): https://backend-dev-fdantonelli.herokuapp.com
+- Backend ( heroku ): https://third-exercise-backend.herokuapp.com/productRandom
 
 
 ## API Reference
@@ -86,3 +104,4 @@ Go to the project directory
     "description": "holaaa",
     "code": "435rdf",
     "stock": 1
+
