@@ -6,7 +6,6 @@ class MongoDB {
   }
 
   save = async item => {
-    console.log(item)
     try {
       const newItem = this.model(item);
 
