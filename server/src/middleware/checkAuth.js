@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({path: './src/.env'});
 const jwt = require('jsonwebtoken');
 const HttpError = require('../utils/HttpError');
 
