@@ -1,0 +1,21 @@
+@import '../../index.scss';
+
+.container{
+  display: flex;
+  margin: 0.5rem 0;
+  flex-direction: column;
+  .input {
+    outline: none;
+    border: .5px solid white;
+    margin: 0.3rem 0;
+    padding: .8rem;
+    border-radius: 0.3rem;
+    background-color: transparent;
+    color: white;
+  }
+  .error{
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: $light-red-study;
+  }
+}
