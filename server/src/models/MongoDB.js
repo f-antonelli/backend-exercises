@@ -6,6 +6,7 @@ class MongoDB {
   }
 
   save = async item => {
+    console.log(item)
     try {
       const newItem = this.model(item);
 
@@ -36,6 +37,17 @@ class MongoDB {
     try {
       let data = await this.model.findOne({ _id });
 
+      return data;
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
+
+  checkIfEmailExists = async (email) => {
+    try {
+      let data = await this.model.findOne({ email: email });
       return data;
     } catch (error) {
       res.status(500).json({
