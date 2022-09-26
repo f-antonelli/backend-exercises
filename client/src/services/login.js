@@ -7,8 +7,8 @@ const fromApiResponse = apiResponse => {
   return data;
 };
 
-const createUser = async (user) => {
-  const apiURL = `${API_LOCAL}/api/users/signup`;
+const apiLogin = async (user) => {
+  const apiURL = `${API_LOCAL}/api/users/login`;
 
   return await axios
     .post(apiURL, user)
@@ -18,4 +18,4 @@ const createUser = async (user) => {
     .then(fromApiResponse);
 };
 
-export default createUser;
+export default apiLogin;
