@@ -65,7 +65,7 @@ const login = async (req, res, next) => {
   let existingUser;
 
   try {
-    existingUser = await c.checkIfEmailExists(user.email)
+    existingUser = await c.checkIfEmailExists(user.email);
   } catch (err) {
     const error = new HttpError('Logging in failed, please try again later.', 500);
     return next(error);

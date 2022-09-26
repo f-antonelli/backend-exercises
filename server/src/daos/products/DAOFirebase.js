@@ -1,4 +1,4 @@
-const Firebase = require("../../models/Firebase");
+const Firebase = require('../../models/Firebase');
 
 class DAOFirebase extends Firebase {
   constructor() {

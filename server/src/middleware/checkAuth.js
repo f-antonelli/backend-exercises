@@ -1,4 +1,4 @@
-require('dotenv').config({path: './src/.env'});
+require('dotenv').config({ path: './src/.env' });
 const jwt = require('jsonwebtoken');
 const HttpError = require('../utils/HttpError');
 
@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
 
     if (!token) {
       // throw new Error('Authentication failed!');
-      res.redirect('/login')
+      res.redirect('/login');
     }
 
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
