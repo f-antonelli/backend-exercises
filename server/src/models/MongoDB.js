@@ -45,6 +45,17 @@ class MongoDB {
     }
   };
 
+  checkIfEmailExists = async (email) => {
+    try {
+      let data = await this.model.findOne({ email: email });
+      return data;
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
+
   updateById = async (item, id) => {
     let _id = mongoose.Types.ObjectId(id);
     let result;

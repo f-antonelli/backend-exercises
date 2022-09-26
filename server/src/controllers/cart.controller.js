@@ -1,4 +1,4 @@
-const { CartDAO } = require('../models/daos/index');
+const { CartDAO } = require('../daos/index');
 const HttpError = require('../utils/HttpError');
 
 // Instance created .
