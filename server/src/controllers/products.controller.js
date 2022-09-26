@@ -1,5 +1,5 @@
 const HttpError = require('../utils/HttpError');
-const { ProductDAO } = require('../models/daos/index');
+const { ProductDAO } = require('../daos/index');
 
 // Instance created .
 let c = new ProductDAO();

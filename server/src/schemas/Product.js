@@ -12,4 +12,4 @@ const ProductSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = ProductSchema
+module.exports = ProductSchema;
