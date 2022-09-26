@@ -17,7 +17,7 @@ const LoginForm = () => {
       initialValues={{ email: '', password: '' }}
       onSubmit={values =>
         apiLogin(values).then(res => {
-          console.log(res)
+          console.log(res);
           login(res.token);
           navigate('/');
         })

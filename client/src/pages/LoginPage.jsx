@@ -1,5 +1,5 @@
 import LoginForm from '../components/Auth/LoginForm';
-import styles from './styles.module.scss'
+import styles from './styles.module.scss';
 
 const LoginPage = () => {
   return (

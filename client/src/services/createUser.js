@@ -7,7 +7,7 @@ const fromApiResponse = apiResponse => {
   return data;
 };
 
-const createUser = async (user) => {
+const createUser = async user => {
   const apiURL = `${API_LOCAL}/api/users/signup`;
 
   return await axios

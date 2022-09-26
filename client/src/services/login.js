@@ -7,7 +7,7 @@ const fromApiResponse = apiResponse => {
   return data;
 };
 
-const apiLogin = async (user) => {
+const apiLogin = async user => {
   const apiURL = `${API_LOCAL}/api/users/login`;
 
   return await axios
